@@ -61,7 +61,8 @@ def handle_message(event):
     if event.message.text == '次の曲を教えて':
         return_text = song_list[np.random.randint(0, len(song_list))]
     else:
-        return_test = '無効な入力です。\n「次の曲を教えて」と入力して見てね！'
+        return_text = '無効な入力です。\n「次の曲を教えて」と入力して見てね！'
+    
     line_bot_api.reply_message(
     event.reply_token,
     TextSendMessage(text=return_text))
