@@ -40,9 +40,27 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    song_list = ['Autumn Leaves(枯葉)', \
+    'Beautiful Love', \
+    'Blue Bossa', \
+    'Bye Bye Black Bird', \
+    'Days Of Wine And Roses', \
+    'Fly Me To The Moon', \
+    'Girl From Ipanema', \
+    'I’ll Close My Eyes', \
+    'It Could Happen To You', \
+    'Now’s the Time(Fブルース)', \
+    'Satin Doll', \
+    'Someday My Prince Will Come', \
+    'Take The “A” Train', \
+    'There Will Never Be Another You', \
+    'You’d be so nice to come home to']
+    # return_text =  event.message.text
+
+    return_text = song_list[np.random(len(song_list))]
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text+'test'))
+        TextSendMessage(text=return_text))
 
 
 if __name__ == "__main__":
