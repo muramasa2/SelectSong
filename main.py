@@ -1,5 +1,5 @@
 from flask import Flask, request, abort
-
+import numpy as np
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -57,7 +57,7 @@ def handle_message(event):
     'You’d be so nice to come home to']
     # return_text =  event.message.text
 
-    return_text = song_list[np.random(len(song_list))]
+    return_text = song_list[np.random.randint(0, len(song_list))]
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=return_text))
