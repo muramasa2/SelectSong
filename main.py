@@ -57,10 +57,15 @@ def handle_message(event):
     'You’d be so nice to come home to']
     # return_text =  event.message.text
 
-    return_text = song_list[np.random.randint(0, len(song_list))]
+    
+    if event.message.text == '次の曲を教えて':
+        return_text = song_list[np.random.randint(0, len(song_list))]
+    else:
+        return_test = '無効な入力です。\n「次の曲を教えて」と入力して見てね！'
     line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=return_text))
+    event.reply_token,
+    TextSendMessage(text=return_text))
+
 
 
 if __name__ == "__main__":
