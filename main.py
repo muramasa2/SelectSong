@@ -8,6 +8,7 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
+    TemplateSendMessage, ButtonsTemplate, URIAction, ConfirmTemplate #こ↑こ↓が追加分
 )
 import os
 
@@ -19,6 +20,24 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+
+def make_button_template():
+    message_template = TemplateSendMessage(
+        alt_text="にゃーん",
+        template=ButtonsTemplate(
+            text="セッションジャンルを選んでください。",
+            image_size="cover",
+            thumbnail_image_url="https://www.shimay.uno/nekoguruma/wp-content/uploads/sites/2/2018/03/20171124_194201-508x339.jpg",
+            actions=[
+                URIAction(
+                    uri="https://www.shimay.uno/nekoguruma/archives/620",
+                    label="URIアクションのLABEL"
+                )
+            ]
+        )
+    )
+    return message_template
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -57,7 +76,15 @@ def handle_message(event):
     'You’d be so nice to come home to']
     # return_text =  event.message.text
 
-    
+    confirm_template = ConfirmTemplate(text='セッションのジャンルは?', actions=[
+            MessageAction(label='Jazz', text='Jazz'),
+            MessageAction(label='R&B, Funk', text='R&B, Funk'),
+        ])
+    template_message = TemplateSendMessage(
+        alt_text='Confirm alt text', template=confirm_template)
+    line_bot_api.reply_message(event.reply_token, template_message)
+
+
     if event.message.text == '次の曲を教えて':
         return_text = song_list[np.random.randint(0, len(song_list))]
     else:
