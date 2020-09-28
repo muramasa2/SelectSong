@@ -8,7 +8,7 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
-    TemplateSendMessage, ButtonsTemplate, URIAction, ConfirmTemplate #こ↑こ↓が追加分
+    TemplateSendMessage, ButtonsTemplate, ConfirmTemplate #こ↑こ↓が追加分
 )
 import os
 
@@ -21,22 +21,22 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-def make_button_template():
-    message_template = TemplateSendMessage(
-        alt_text="にゃーん",
-        template=ButtonsTemplate(
-            text="セッションジャンルを選んでください。",
-            image_size="cover",
-            thumbnail_image_url="https://www.shimay.uno/nekoguruma/wp-content/uploads/sites/2/2018/03/20171124_194201-508x339.jpg",
-            actions=[
-                URIAction(
-                    uri="https://www.shimay.uno/nekoguruma/archives/620",
-                    label="URIアクションのLABEL"
-                )
-            ]
-        )
-    )
-    return message_template
+# def make_button_template():
+#     message_template = TemplateSendMessage(
+#         alt_text="にゃーん",
+#         template=ButtonsTemplate(
+#             text="セッションジャンルを選んでください。",
+#             image_size="cover",
+#             thumbnail_image_url="https://www.shimay.uno/nekoguruma/wp-content/uploads/sites/2/2018/03/20171124_194201-508x339.jpg",
+#             actions=[
+#                 URIAction(
+#                     uri="https://www.shimay.uno/nekoguruma/archives/620",
+#                     label="URIアクションのLABEL"
+#                 )
+#             ]
+#         )
+#     )
+#     return message_template
 
 
 @app.route("/callback", methods=['POST'])
