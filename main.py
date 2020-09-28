@@ -79,8 +79,8 @@ def handle_message(event):
      'Spain', \
      'Cissy Strut', \
      'Sunny', \
-     'Just the two of us', \   
-     'Cantaloupe island' \   
+     'Just the two of us', \
+     'Cantaloupe island' \
     ]]
 
     confirm_template = ConfirmTemplate(text='セッションのジャンルは?', actions=[
