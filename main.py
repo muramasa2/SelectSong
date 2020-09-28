@@ -8,7 +8,7 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
-    TemplateSendMessage, ButtonsTemplate, ConfirmTemplate #こ↑こ↓が追加分
+    TemplateSendMessage, ButtonsTemplate, ConfirmTemplate, MessageAction #こ↑こ↓が追加分
 )
 import os
 
