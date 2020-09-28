@@ -8,8 +8,7 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
-    TemplateSendMessage, ButtonsTemplate, ConfirmTemplate, MessageAction #こ↑こ↓が追加分
-)
+    TemplateSendMessage, ButtonsTemplate, ConfirmTemplate, MessageAction)
 import os
 
 app = Flask(__name__)
@@ -56,10 +55,9 @@ def callback():
 
     return 'OK'
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    song_list = ['Autumn Leaves(枯葉)', \
+    song_list = [['Autumn Leaves(枯葉)', \
     'Beautiful Love', \
     'Blue Bossa', \
     'Bye Bye Black Bird', \
@@ -73,8 +71,17 @@ def handle_message(event):
     'Someday My Prince Will Come', \
     'Take The “A” Train', \
     'There Will Never Be Another You', \
-    'You’d be so nice to come home to']
-    # return_text =  event.message.text
+    'You’d be so nice to come home to'], 
+    ['Feel like makin’ love', \
+     'The Chicken', \
+     'Chameleon', \
+     'Isn’t she lovely', \
+     'Spain', \
+     'Cissy Strut', \
+     'Sunny', \
+     'Just the two of us', \   
+     'Cantaloupe island' \   
+    ]]
 
     confirm_template = ConfirmTemplate(text='セッションのジャンルは?', actions=[
             MessageAction(label='Jazz', text='Jazz'),
@@ -83,10 +90,10 @@ def handle_message(event):
     template_message = TemplateSendMessage(
         alt_text='Confirm alt text', template=confirm_template)
     line_bot_api.reply_message(event.reply_token, template_message)
-
+    list_num = 0 if template_message=='Jazz' else 1
 
     if event.message.text == '次の曲を教えて':
-        return_text = song_list[np.random.randint(0, len(song_list))]
+        return_text = song_list[list_num][np.random.randint(0, len(song_list))]
     else:
         return_text = '無効な入力です。\n「次の曲を教えて」と入力してみてね！'
     
@@ -94,9 +101,6 @@ def handle_message(event):
     event.reply_token,
     TextSendMessage(text=return_text))
 
-
-
 if __name__ == "__main__":
-#    app.run()
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
