@@ -46,7 +46,7 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-
+    confirm_template = None
     # handle webhook body
     try:
         handler.handle(body, signature)
@@ -83,16 +83,15 @@ def handle_message(event):
      'Cantaloupe island' \
     ]]
 
-    confirm_template = ConfirmTemplate(text='セッションのジャンルは?', actions=[
+    if event.message.text == '次の曲を教えて':
+        confirm_template = ConfirmTemplate(text='セッションのジャンルは?', actions=[
             MessageAction(label='Jazz', text='Jazz'),
             MessageAction(label='R&B, Funk', text='R&B, Funk'),
         ])
-    template_message = TemplateSendMessage(
-        alt_text='Confirm alt text', template=confirm_template)
-    line_bot_api.reply_message(event.reply_token, template_message)
-    list_num = 0 if template_message=='Jazz' else 1
-
-    if event.message.text == '次の曲を教えて':
+        template_message = TemplateSendMessage(
+            alt_text='Confirm alt text', template=confirm_template)
+        # line_bot_api.reply_message(event.reply_token, template_message)
+        list_num = 0 if template_message=='Jazz' else 1
         return_text = song_list[list_num][np.random.randint(0, len(song_list))]
     else:
         return_text = '無効な入力です。\n「次の曲を教えて」と入力してみてね！'
